@@ -4,11 +4,29 @@
   function initMap() {
     var location = {lat: 32.779167, lng: -96.808891};
     var map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 4,
+      zoom: 7,
       center: location
      });
 
+     autocomplete = new google.maps.places.Autocomplete(document.getElementById("input"),
+      {
+        componentRestrictions: {'country': ['us']},
+        fields: ['geometry', 'name'],
+        types: ['establishment']
+
+      })
+
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        new google.maps.Marker({
+          position: place.geometry.location,
+          title: place.name,
+          map: map
+        })
+      })
+
   }
+
 window.initMap=initMap;
 
 console.log("what") 
@@ -44,6 +62,7 @@ console.log("what")
 
     <input type="submit" value="Save">
   </form>
+  <input id="input" style="height: 60px; width: 800px;">
   <div id="map"> </div> -->
 
 
@@ -53,5 +72,5 @@ console.log("what")
 {% endblock %}
 
 {% block script %}
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1bRIy-ceoZp7y7gClPoHCDqsQtG_fh_0&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1bRIy-ceoZp7y7gClPoHCDqsQtG_fh_0&libraries=places&callback=initMap"></script>
 {% endblock script %}
