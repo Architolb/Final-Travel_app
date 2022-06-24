@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block head %}
+<script>
+  function initMap() {
+    var location = {lat: 32.779167, lng: -96.808891};
+    var map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 4,
+      center: location
+     });
+
+  }
+window.initMap=initMap;
+
+console.log("what") 
+
+</script>
+
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  
+  </style>
+
+{% endblock head %}
+
+
+{% block header %}
+  <h1>{% block title %}New POI{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="title">Trip</label>
+    <input name="title" id="title" value="{{ request.form['title'] }}" required>
+    <label for="body">Where to</label>
+    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+
+    <input type="submit" value="Save">
+  </form>
+  <div id="map"> </div> -->
+
+
+
+
+  
+{% endblock %}
+
+{% block script %}
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1bRIy-ceoZp7y7gClPoHCDqsQtG_fh_0&callback=initMap"></script>
+{% endblock script %}
